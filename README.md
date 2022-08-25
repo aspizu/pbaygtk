@@ -7,6 +7,11 @@ wrapper.
 Use the original [pbay](https://github.com/xAspirus/pbay) for a command-line
 alternative which works on all platforms.
 
+## Screenshots
+
+![Screenshot 1](docs/assets/screenshot_1.png)
+![Screenshot 2](docs/assets/screenshot_2.png)
+
 ## Installation
 
 ### Linux and BSDs
