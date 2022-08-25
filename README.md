@@ -1,4 +1,4 @@
-# pbaygtk
+# pbaygtk v0.0.1
 
 Gtk3 Wrapper around [thepiratebay.org](https://thepiratebay.org/)'s API. 
 Turns out, ISPs didn't ban the actual API allowing us to access it via this 
