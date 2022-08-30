@@ -1,5 +1,7 @@
 import webbrowser
+from datetime import datetime
 
+import datasize
 import gi
 
 gi.require_version("Gtk", "3.0")
@@ -31,7 +33,6 @@ class TorrentList(Gtk.ScrolledWindow):
         self.win = win
         super().__init__()
         self.store = Gtk.ListStore(
-            str,  # ID
             str,  # NAME
             str,  # SIZE
             str,  # SE
@@ -42,11 +43,12 @@ class TorrentList(Gtk.ScrolledWindow):
         self.treeview = Gtk.TreeView(model=self.store)
         self.add(self.treeview)
 
-        for i, column_title in enumerate(
-            ["ID", "Name", "Size", "SE", "LE", "User", "Added"]
-        ):
+        for i, column_title in enumerate(["Name", "Size", "SE", "LE", "User", "Added"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            if column_title in ("Size", "SE", "LE"):
+                column.set_alignment(1.0)  # 1.0 -> RIGHT
+                renderer.set_alignment(1.0, 0.0)
             column.set_sizing(Gtk.TreeViewColumnSizing.AUTOSIZE)
             column.set_resizable(True)
             self.treeview.append_column(column)
@@ -61,13 +63,14 @@ class TorrentList(Gtk.ScrolledWindow):
         for torrent in self.torrents:
             self.store.append(
                 [
-                    str(torrent.id),
                     str(torrent.name),
-                    str(torrent.size),
+                    f"{datasize.DataSize(torrent.size):.2a}",
                     str(torrent.seeders),
                     str(torrent.leechers),
-                    str(torrent.username),
-                    str(torrent.added),
+                    f"{torrent.username} ({torrent.status})",
+                    datetime.utcfromtimestamp(torrent.added).strftime(
+                        "%d/%m/%Y %I:%M %p"
+                    ),
                 ]
             )
 
