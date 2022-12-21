@@ -5,7 +5,7 @@
 
 # CONFIGURATION
 COMMAND_NAME="pbaygtk"
-REQUIREMENTS="pygobject requests datasize"
+REQUIREMENTS="pygobject requests"
 
 
 set -e
